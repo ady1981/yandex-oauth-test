@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import express from 'express'
 import session from 'express-session'
 import passport from 'passport'
@@ -20,11 +21,11 @@ app.use(express.static('public'))
 app.use(passport.initialize());
 app.use(passport.session());
 
-//app.get('/test', (req, res) => {
-//  console.log('req.session', req.session)
-//  req.session.number = req.session.number ? //req.session.number + 1 : 1
-//  res.json({ session: req.session })
-//})
+app.get('/test', (req, res) => {
+ console.log('req.session', req.session)
+ // req.session.number = req.session.number ? //req.session.number + 1 : 1
+ res.json({ session: req.session })
+})
 
 app.use('/auth', authRouter)
 app.use('/rest', restRouter)
