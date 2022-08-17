@@ -16,7 +16,7 @@
         Website with <strong>Yandex OAuth Login</strong>!
       </p>
       <p>
-        <a id="yandex_login" class="button" href="https://oauth.yandex.ru/authorize?response_type=code&client_id=a21f97aeabff43af8cf29b903a8460fa">
+        <a id="yandex_login" class="button" href="https://oauth.yandex.ru/authorize?response_type=code&client_id=e23741728c8148fdbeda69e9e1dabbc3">
           Login with Yandex</a>
       </p>
       <!--
@@ -40,11 +40,11 @@
         document.getElementById('user_info').innerHTML = JSON.stringify(user, null, 2)
         document.getElementById('yandex_login').style.display = "none"
       }
-      
+
       fetch('/rest/user')
         .then((res) => {
           if (res.status !== 200) {
-            showLogin()  
+            showLogin()
             throw new Error(`Bad code=${res.status}`)
           } else {
             return res.json()
