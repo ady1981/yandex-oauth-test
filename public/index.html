@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hello Yandex!</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  </head>
+  <body>
+  <section class="section">
+    <div class="container">
+      <h1 class="title">
+        Hello Yandex
+      </h1>
+      <p class="subtitle">
+        Website with <strong>Yandex OAuth Login</strong>!
+      </p>
+      <p>
+        <a id="yandex_login" class="button" href="https://oauth.yandex.ru/authorize?response_type=code&client_id=a21f97aeabff43af8cf29b903a8460fa">
+          Login with Yandex</a>
+      </p>
+      <!--
+      <p>
+        <a class="button" href="/auth">auth</a>
+      </p>
+      -->
+      <pre id="user_info" />
+    </div>
+  </section>
+    <script type="text/javascript">
+
+      function showLogin() {
+        console.log('showLogin')
+        document.getElementById('user_info').innerHTML = ''
+        document.getElementById('yandex_login').style.display = "inline-flex"
+      }
+
+      function showUser(user) {
+        console.log('showUser', user)
+        document.getElementById('user_info').innerHTML = JSON.stringify(user, null, 2)
+        document.getElementById('yandex_login').style.display = "none"
+      }
+      
+      fetch('/rest/user')
+        .then((res) => {
+          if (res.status !== 200) {
+            showLogin()  
+            throw new Error(`Bad code=${res.status}`)
+          } else {
+            return res.json()
+          }
+        })
+        .then((user) => showUser(user))
+        .catch(({ message }) => console.error(message))
+
+    </script>
+  </body>
+</html>
