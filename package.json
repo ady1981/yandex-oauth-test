@@ -1,9 +1,10 @@
 {
-  "name": "nodejs",
-  "version": "1.0.0",
+  "name": "yandex-oauth-test",
+  "version": "0.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node ./index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -12,6 +13,7 @@
   "type": "module",
   "dependencies": {
     "@types/node": "^18.0.6",
+    "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "express-session": "^1.17.3",
     "node-fetch": "^3.2.6",
