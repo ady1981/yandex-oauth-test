@@ -1,8 +1,8 @@
 import express from 'express'
 import passport from 'passport'
 import { Strategy as YandexStrategy } from 'passport-yandex'
+import { clientID, clientSecret } from '../config.mjs'
 
-const { YANDEX_CLIENT_ID, YANDEX_CLIENT_SECRET } = process.env
 const tokens = {}
 
 function passportInit() {
@@ -15,8 +15,8 @@ function passportInit() {
   });
 
   passport.use(new YandexStrategy({
-      clientID: YANDEX_CLIENT_ID,
-      clientSecret: YANDEX_CLIENT_SECRET,
+      clientID,
+      clientSecret,
       callbackURL: "/auth/yandex/callback"
     },
     function(accessToken, refreshToken, profile, done) {
@@ -31,15 +31,15 @@ function passportInit() {
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  console.log('req.user', req.user)
-  console.log('req.session', req.session)
+  //console.log('req.user', req.user)
+  //console.log('req.session', req.session)
   res.json({ user: req.user, session: req.session })
 })
 router.get('/yandex/callback',
   passport.authenticate('yandex', { failureRedirect: '/login' }),
   function(req, res) {
-    console.log('req.user', req.user)
-    console.log('req.session', req.session)
+    //console.log('req.user', req.user)
+    //console.log('req.session', req.session)
     res.redirect('/')
   }
 );
