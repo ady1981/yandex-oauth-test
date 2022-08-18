@@ -20,7 +20,6 @@ function passportInit() {
       callbackURL: "/auth/yandex/callback"
     },
     function(accessToken, refreshToken, profile, done) {
-      console.log('YandexStrategy:', { accessToken, refreshToken, profile });
       setInterval(function () {
         return done(null, profile);
       })
@@ -31,15 +30,11 @@ function passportInit() {
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  //console.log('req.user', req.user)
-  //console.log('req.session', req.session)
   res.json({ user: req.user, session: req.session })
 })
 router.get('/yandex/callback',
   passport.authenticate('yandex', { failureRedirect: '/login' }),
   function(req, res) {
-    //console.log('req.user', req.user)
-    //console.log('req.session', req.session)
     res.redirect('/')
   }
 );

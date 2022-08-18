@@ -19,26 +19,27 @@
         <a id="yandex_login" class="button" href="https://oauth.yandex.ru/authorize?response_type=code&client_id=e23741728c8148fdbeda69e9e1dabbc3">
           Login with Yandex</a>
       </p>
-      <!--
       <p>
-        <a class="button" href="/auth">auth</a>
+        <button id="logout" class="button">Logout</button>
       </p>
-      -->
-      <pre id="user_info" />
+      <pre id="user_info"></pre>
     </div>
   </section>
     <script type="text/javascript">
 
+    window.addEventListener('DOMContentLoaded', (event) => {
+      console.log('DOM fully loaded and parsed');
+
       function showLogin() {
-        console.log('showLogin')
         document.getElementById('user_info').innerHTML = ''
         document.getElementById('yandex_login').style.display = "inline-flex"
+        document.getElementById('logout').style.display = "none"
       }
 
       function showUser(user) {
-        console.log('showUser', user)
         document.getElementById('user_info').innerHTML = JSON.stringify(user, null, 2)
         document.getElementById('yandex_login').style.display = "none"
+        document.getElementById('logout').style.display = "inline-flex"
       }
 
       fetch('/rest/user')
@@ -52,6 +53,15 @@
         })
         .then((user) => showUser(user))
         .catch(({ message }) => console.error(message))
+
+      document.getElementById('logout').onclick = function () {
+        fetch('/rest/logout')
+          .catch(() => {})
+          .finally(() => {
+            window.location = window.location.href;
+          })
+      }
+    });
 
     </script>
   </body>

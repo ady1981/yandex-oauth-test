@@ -7,11 +7,17 @@ function isAuthenticated (req, res, next) {
     next()
     return;
   }
-  next('route')
+
+  res.status(401).send('Auth required')
 }
 
 router.get('/user', isAuthenticated, (req, res) => {
   res.json({ user: req.user })
+})
+
+router.get('/logout', isAuthenticated, (req, res) => {
+  req.logout(() => {})
+  res.redirect('/')
 })
 
 export {
