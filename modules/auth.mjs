@@ -20,9 +20,15 @@ function passportInit() {
       callbackURL: "/auth/yandex/callback"
     },
     function(accessToken, refreshToken, profile, done) {
-      setInterval(function () {
+      // asynchronous verification, for effect...
+      process.nextTick(function () {
+
+        // To keep the example simple, the user's Yandex profile is returned
+        // to represent the logged-in user.  In a typical application, you would
+        // want to associate the Yandex account with a user record in your
+        // database, and return that user instead.
         return done(null, profile);
-      })
+      });
     }
   ))
 }
@@ -37,7 +43,13 @@ router.get('/yandex/callback',
   function(req, res) {
     res.redirect('/')
   }
-);
+)
+router.get('/yandex',
+  passport.authenticate('yandex'),
+  function(req, res){
+    // The request will be redirected to Yandex for authentication, so this
+    // function will not be called.
+  })
 
 export {
   passportInit,
